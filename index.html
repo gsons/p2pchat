@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Webtorrent File Access</title>
+    <script src="https://unpkg.com/webtorrent@1.9.7/webtorrent.min.js"></script>
+</head>
+
+<body>
+    <h1>Webtorrent File Access</h1>
+    <script>
+        // 创建Webtorrent客户端实例
+        const client = new WebTorrent()
+
+        // 替换为你电脑上Webtorrent生成的磁力链接或文件链接
+        const torrentId ='magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+
+        // 加载种子
+        client.add(torrentId, function (torrent) {
+            // 监听文件加载完成事件
+            torrent.on('ready', function () {
+                // 遍历种子中的文件
+                torrent.files.forEach(function (file) {
+                    // 打印文件名
+                    console.log('File:', file.name)
+
+                    // 创建一个链接来下载文件
+                    const a = document.createElement('a')
+                    a.href = file.url
+                    a.textContent = 'Download ' + file.name
+                    document.body.appendChild(a)
+                    document.body.appendChild(document.createElement('br'))
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>
