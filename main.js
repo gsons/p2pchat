@@ -130,7 +130,7 @@ function checkUrlAndConnect() {
 window.addEventListener('DOMContentLoaded', checkUrlAndConnect);
 function connectToSignalingServer() {
     // 使用SSE连接到信令服务器
-    eventSource = new EventSource(`signaling.php?id=${localId}`);
+    eventSource = new EventSource(`/api/signaling.php?id=${localId}`);
     
     eventSource.onopen = () => {
         console.log('已连接到信令服务器');
@@ -391,7 +391,7 @@ function generateRandomId() {
 
 // 发送信令消息
 function sendSignalingMessage(message) {
-    fetch('send_signal.php', {
+    fetch('/api/send_signal.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
