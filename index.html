@@ -3,37 +3,82 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Webtorrent File Access</title>
-    <script src="https://unpkg.com/webtorrent@1.9.7/webtorrent.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勾股定理的数形结合证明</title>
+    <!-- 引入 MathJax 用于渲染 LaTeX 公式 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
-    <h1>Webtorrent File Access</h1>
+    <!-- Canvas 元素用于绘制图形 -->
+    <canvas id="pythagorasCanvas" width="400" height="400"></canvas>
+    <div>
+        <h2>勾股定理的数形结合证明</h2>
+        <p>勾股定理指出，在一个直角三角形中，直角边的平方和等于斜边的平方，即 \(a^2 + b^2 = c^2\)，其中 \(a\) 和 \(b\) 是直角边，\(c\) 是斜边。</p>
+        <p>我们可以通过以下数形结合的方法来证明勾股定理：</p>
+        <ol>
+            <li>构造一个边长为 \(a + b\) 的大正方形。</li>
+            <li>在大正方形内部，放置四个全等的直角三角形，它们的直角边分别为 \(a\) 和 \(b\)，斜边为 \(c\)。</li>
+            <li>大正方形的面积可以表示为 \((a + b)^2\)。</li>
+            <li>四个直角三角形的面积之和为 \(4\times\frac{1}{2}ab = 2ab\)。</li>
+            <li>中间剩余的小正方形的边长为 \(c\)，其面积为 \(c^2\)。</li>
+            <li>根据面积相等的原理，大正方形的面积等于四个直角三角形的面积之和加上中间小正方形的面积，即 \((a + b)^2 = 2ab + c^2\)。</li>
+            <li>展开 \((a + b)^2\) 得到 \(a^2 + 2ab + b^2\)，所以 \(a^2 + 2ab + b^2 = 2ab + c^2\)。</li>
+            <li>两边同时减去 \(2ab\)，得到 \(a^2 + b^2 = c^2\)，这就是勾股定理。</li>
+        </ol>
+    </div>
+
     <script>
-        // 创建Webtorrent客户端实例
-        const client = new WebTorrent()
+        // 获取 Canvas 元素
+        const canvas = document.getElementById('pythagorasCanvas');
+        const ctx = canvas.getContext('2d');
 
-        // 替换为你电脑上Webtorrent生成的磁力链接或文件链接
-        const torrentId ='magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+        // 定义直角三角形的边长
+        const a = 80;
+        const b = 120;
+        const c = Math.sqrt(a * a + b * b);
 
-        // 加载种子
-        client.add(torrentId, function (torrent) {
-            // 监听文件加载完成事件
-            torrent.on('ready', function () {
-                // 遍历种子中的文件
-                torrent.files.forEach(function (file) {
-                    // 打印文件名
-                    console.log('File:', file.name)
+        // 绘制大正方形
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        const sideLength = a + b;
+        ctx.strokeRect(50, 50, sideLength, sideLength);
 
-                    // 创建一个链接来下载文件
-                    const a = document.createElement('a')
-                    a.href = file.url
-                    a.textContent = 'Download ' + file.name
-                    document.body.appendChild(a)
-                    document.body.appendChild(document.createElement('br'))
-                })
-            })
-        })
+        // 绘制四个直角三角形
+        ctx.fillStyle = 'lightblue';
+        // 第一个三角形
+        ctx.beginPath();
+        ctx.moveTo(50, 50);
+        ctx.lineTo(50 + a, 50);
+        ctx.lineTo(50, 50 + b);
+        ctx.closePath();
+        ctx.fill();
+        // 第二个三角形
+        ctx.beginPath();
+        ctx.moveTo(50 + sideLength, 50);
+        ctx.lineTo(50 + sideLength - b, 50);
+        ctx.lineTo(50 + sideLength, 50 + a);
+        ctx.closePath();
+        ctx.fill();
+        // 第三个三角形
+        ctx.beginPath();
+        ctx.moveTo(50 + sideLength, 50 + sideLength);
+        ctx.lineTo(50 + sideLength - a, 50 + sideLength);
+        ctx.lineTo(50 + sideLength, 50 + sideLength - b);
+        ctx.closePath();
+        ctx.fill();
+        // 第四个三角形
+        ctx.beginPath();
+        ctx.moveTo(50, 50 + sideLength);
+        ctx.lineTo(50 + b, 50 + sideLength);
+        ctx.lineTo(50, 50 + sideLength - a);
+        ctx.closePath();
+        ctx.fill();
+
+        // 绘制中间的小正方形
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(50 + a, 50 + a, c, c);
     </script>
 </body>
 
