@@ -128,13 +128,9 @@ function checkUrlAndConnect() {
 
 // 页面加载完成后检查URL参数
 window.addEventListener('DOMContentLoaded', checkUrlAndConnect);
-// 信令服务器URL（需要替换为你的Cloudflare Worker URL）
-const SIGNALING_SERVER = 'https://aged-darkness-c899.qq976955017.workers.dev';
-
-// 连接到信令服务器
 function connectToSignalingServer() {
     // 使用SSE连接到信令服务器
-    eventSource = new EventSource(`${SIGNALING_SERVER}/connect?id=${localId}`);
+    eventSource = new EventSource(`signaling.php?id=${localId}`);
     
     eventSource.onopen = () => {
         console.log('已连接到信令服务器');
@@ -395,7 +391,7 @@ function generateRandomId() {
 
 // 发送信令消息
 function sendSignalingMessage(message) {
-    fetch(`${SIGNALING_SERVER}/send`, {
+    fetch('send_signal.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
